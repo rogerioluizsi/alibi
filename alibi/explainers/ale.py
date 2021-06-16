@@ -441,7 +441,7 @@ def ale_num(
     ale = accum_p_deltas
 
     #gambiaarra
-    ale0 = ale_local
+    ale0 = ale_local + ale0
 
     return q, ale, ale0
 
