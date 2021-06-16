@@ -437,10 +437,13 @@ def ale_num(
     #            accum_p_deltas[indices] - accum_p_deltas[indices - 1])
     # ale0 = exact_ale.mean()
 
-    # center
-    ale = accum_p_deltas - ale0
+    # uncentered
+    ale = accum_p_deltas
 
-    return q, ale, ale0, ale_local
+    #gambiaarra
+    ale0 = ale_local
+
+    return q, ale, ale0
 
 
 # no_type_check is needed because exp is a generic explanation and so mypy doesn't know that the
