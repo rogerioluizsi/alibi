@@ -441,7 +441,11 @@ def ale_num(
     ale = accum_p_deltas
 
     #gambiaarra
+   # ale0 = ale_local + ale0
+    print("ale_local:", len(ale_local))
+    print("ale0:",len(ale0))
     ale0 = ale_local + ale0
+    print("final ale0:",len(ale0))
 
     return q, ale, ale0
 
