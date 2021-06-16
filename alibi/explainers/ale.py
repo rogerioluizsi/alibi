@@ -134,6 +134,7 @@ class ALE(Explainer):
 
         feature_values = []
         ale_values = []
+        ale_local = []
         ale0 = []
         feature_deciles = []
 
@@ -154,6 +155,7 @@ class ALE(Explainer):
 
             feature_values.append(q)
             ale_values.append(ale)
+            ale_local.append(ale_local)
             ale0.append(a0)
             feature_deciles.append(deciles)
 
@@ -164,6 +166,7 @@ class ALE(Explainer):
         # maximum number of points.
         return self.build_explanation(
             ale_values=ale_values,
+            ale_local=ale_local,
             ale0=ale0,
             constant_value=constant_value,
             feature_values=feature_values,
@@ -173,6 +176,7 @@ class ALE(Explainer):
 
     def build_explanation(self,
                           ale_values: List[np.ndarray],
+                          ale_local: List[np.ndarray],
                           ale0: List[np.ndarray],
                           constant_value: float,
                           feature_values: List[np.ndarray],
@@ -188,6 +192,7 @@ class ALE(Explainer):
         data = copy.deepcopy(DEFAULT_DATA_ALE)
         data.update(
             ale_values=ale_values,
+            ale_local=ale_local,
             ale0=ale0,
             constant_value=constant_value,
             feature_values=feature_values,
@@ -410,6 +415,9 @@ def ale_num(
 
     avg_p_deltas = df.groupby(df.shape[1] - 1).mean().values  # groupby indices
 
+    #average local effects
+    ale_local = avg_p_deltas
+
     # accummulate over intervals
     accum_p_deltas = np.cumsum(avg_p_deltas, axis=0)
 
@@ -432,7 +440,7 @@ def ale_num(
     # center
     ale = accum_p_deltas - ale0
 
-    return q, ale, ale0
+    return q, ale, ale0, ale_local
 
 
 # no_type_check is needed because exp is a generic explanation and so mypy doesn't know that the
