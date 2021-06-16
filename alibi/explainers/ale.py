@@ -430,8 +430,14 @@ def ale_num(
     # ale0 = exact_ale.mean()
 
     # center
-    ale = accum_p_deltas 
+    ale = accum_p_deltas #uncentered 
     #- ale0
+    
+    #uncenter
+    ale0 = accum_p_deltas - ale0
+    # abs avg from ale through ale0
+    ale0 = np.mean(np.abs(ale0))
+    
 
     return q, ale, ale0
 
