@@ -430,7 +430,8 @@ def ale_num(
     # ale0 = exact_ale.mean()
 
     # center
-    ale = accum_p_deltas - ale0
+    ale = accum_p_deltas 
+    #- ale0
 
     return q, ale, ale0
 
